@@ -1,9 +1,10 @@
 version: "2"
 
 options:
-  verbose: true
+  compose-file-path: './docker-compose.yml'
+  verbose: true # make the whole sync verbose, debug purpose
+  
 syncs:
-  appcode-native-osx-sync: # tip: add -sync and you keep consistent names as a convention
-    src: './app'
-    # sync_strategy: 'native_osx' # not needed, this is the default now
-    sync_excludes: ['ignored_folder', '.ignored_dot_folder', '.git', 'var/cache', '.docker-sync']
+  ${COMPOSE_PROJECT_NAME}_sync:
+    src: './'
+    sync_excludes: ['ignored_folder', '.ignored_dot_folder', '.git', 'var/cache', '.docker-sync', 'node_modules', '.idea']

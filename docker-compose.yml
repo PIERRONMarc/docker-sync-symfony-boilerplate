@@ -1,16 +1,16 @@
-version: '2'
+version: '3'
 services:
   web: 
-    container_name: projectName_web
+    container_name: ${COMPOSE_PROJECT_NAME}_web
     build: .
     ports:
       - "80:80"
     volumes:
-      - appcode-native-osx-sync:/var/www/html:nocopy
+      - source_sync:/var/www/html:nocopy
     links:
       - db:db
   db:
-    container_name: projectName_db
+    container_name: ${COMPOSE_PROJECT_NAME}_db
     image: mysql
     command: ["--default-authentication-plugin=mysql_native_password"]
     volumes:
@@ -20,7 +20,7 @@ services:
     ports:
         - "3306:3306" 
   phpmyadmin:
-      container_name: projectName_phpmyadmin
+      container_name: ${COMPOSE_PROJECT_NAME}_phpmyadmin
       image: phpmyadmin/phpmyadmin
       depends_on:
         - db
@@ -28,17 +28,8 @@ services:
           - "8080:80"
 
 
-
-# this is our development docker-compose building on top of the production docker-compose, just mounting
-# the sync image - not redefining anything else
-
-#version: "2"
-# services:
-#   app-native-osx:
-#     volumes:
-#       - appcode-native-osx-sync:/var/www:nocopy # nocopy is important
-
 # that the important thing
 volumes:
-  appcode-native-osx-sync:
-    external: true
+  source_sync:
+    external: 
+      name: ${COMPOSE_PROJECT_NAME}_sync
