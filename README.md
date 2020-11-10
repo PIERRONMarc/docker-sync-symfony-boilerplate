@@ -36,7 +36,9 @@ COMPOSE_PROJECT_NAME=nameYourApp
 ###< docker-compose ###
 ```
 
-5) Start docker and docker-sync
+5) add `./docker-sync` and `./data` (database volume) to your .gitignore file
+
+6) Start docker and docker-sync
 
 ```
 make server-start
